@@ -3,7 +3,7 @@
  * Plugin Name: MilesWeb Tools
  * Plugin URI: https://milesweb.com
  * Description: A plugin to manage maintenance mode, force HTTPS, disable file editing, track user login activity, display storage usage, and provide detailed insights into active/inactive themes and plugins.
- * Version: 1.0
+ * Version: 1.0.1
  * Author: MilesWeb
  * Author URI: https://www.milesweb.com
  * License: GPLv2 or later

@@ -52,7 +52,7 @@ function milesweb_maintenance_mode() {
             <title><?php echo esc_html__('Coming Soon', 'milesweb-tools'); ?></title>
             <?php wp_head(); ?>
         </head>
-        <body>
+        <body class="mainbodytag">
             <div class="coming-soon">
                 <?php echo wp_kses_post($logo_img); ?>
                 <div><?php echo wp_kses_post($coming_soon_img); ?></div>

@@ -12,7 +12,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Short Description: Manage security, maintenance, and user logging while monitoring storage usage in one plugin.
 
 == Description ==
-MilesWeb Tools is a powerful WordPress plugin designed to enhance security, manage maintenance mode, enforce HTTPS, disable file editing, user logins log, track storage usage, and provide detailed insights into active/inactive themes and plugins.
+MilesWeb Tools is a powerful WordPress plugin designed to enhance security, manage maintenance mode, enforce HTTPS, disable file editing, log user activity, track storage usage, and provide detailed insights into active/inactive themes and plugins.
 
 Features:
 
@@ -31,7 +31,7 @@ Features:
 - PHP 7.4 or higher
 
 **Automatic Installation**:
-   - This plugin will be automatically installed if you set up a WordPress site on Milesweb’s managed WordPress hosting account.
+   - This plugin will be automatically installed if you set up a WordPress site on MilesWeb’s managed WordPress hosting account.
 
 **Install via WordPress Admin**:
    1. In your WordPress admin panel, navigate to 'Plugins' > 'Add New'.
@@ -47,16 +47,11 @@ Features:
    4. Access the plugin settings via the 'MilesWeb' menu in the WordPress admin panel.
 
 == Screenshots ==
-
-Admin dashboard overview.
-
-Security settings panel.
-
-Active & inactive plugins list with performance metrics.
-
-Storage usage tracking.
-
-Theme information panel.
+1. Admin dashboard overview.
+2. Security settings panel.
+3. Active & inactive plugins list with performance metrics.
+4. Storage usage tracking.
+5. Theme information panel.
 
 == Frequently Asked Questions ==
 = Does this plugin work with all WordPress themes? =
@@ -69,23 +64,21 @@ The plugin scans installed plugins and themes for vulnerabilities.
 Yes, each feature has a toggle switch in the admin panel.
 
 == Changelog ==
+= 1.0.1 =
+* Fixed issues related to maintenance mode display and behavior.
+* Minor UI improvements for the admin panel.
+
 = 1.0 =
-
-- Initial release.
-
-- Added maintenance mode.
-
-- Implemented HTTPS redirection.
-
-- Disabled file editing & XML-RPC.
-
-- Logged user activity.
-
-- Added theme and plugin information tracking.
+* Initial release.
+* Added maintenance mode.
+* Implemented HTTPS redirection.
+* Disabled file editing & XML-RPC.
+* Logged user activity.
+* Added theme and plugin information tracking.
 
 == Upgrade Notice ==
-= 1.0 =
-Initial release. Upgrade to ensure security and maintenance features are up to date.
+= 1.0.1 =
+Bug fix release – resolves maintenance mode issues and improves UI consistency.
 
 == License & Credits ==
 This plugin is licensed under GPLv2 or later. Contributions from the WordPress community are appreciated.
