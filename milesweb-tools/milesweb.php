@@ -3,7 +3,7 @@
  * Plugin Name: MilesWeb Tools
  * Plugin URI: https://milesweb.com
  * Description: A plugin to manage maintenance mode, force HTTPS, disable file editing, track user login activity, display storage usage, and provide detailed insights into active/inactive themes and plugins.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: MilesWeb
  * Author URI: https://www.milesweb.com
  * License: GPLv2 or later
@@ -29,7 +29,10 @@ require_once MILESWEB_PLUGIN_DIR . 'includes/user-logging.php';
 require_once MILESWEB_PLUGIN_DIR . 'includes/storage-usage.php';
 require_once MILESWEB_PLUGIN_DIR . 'includes/wp-update.php';
 require_once MILESWEB_PLUGIN_DIR . 'includes/theme-plugin-info.php';
+require_once MILESWEB_PLUGIN_DIR . 'includes/mymw-footer.php';
+require_once MILESWEB_PLUGIN_DIR . 'includes/security-shield.php';
 // Enqueue assets
+
 function milesweb_enqueue_assets() {
     // Register CSS
     wp_register_style('milesweb-admin-css', MILESWEB_PLUGIN_URL . 'assets/css/mw-style.css', [], filemtime(plugin_dir_path(__FILE__) . 'assets/css/mw-style.css'), 'all');
@@ -56,12 +59,16 @@ function milesweb_enqueue_assets() {
 add_action('admin_enqueue_scripts', 'milesweb_enqueue_assets');
 // Plugin activation hook
 function milesweb_plugin_activate() {
-    // Add custom functionality on plugin activation, like adding options or creating database tables
     if (!get_option('milesweb_plugin_installed')) {
         add_option('milesweb_plugin_installed', true);
     }
+
+    if (get_option('mw_force_footer_enabled') === false) {
+        add_option('mw_force_footer_enabled', true);
+    }
 }
 register_activation_hook(__FILE__, 'milesweb_plugin_activate');
+
 // Plugin deactivation hook
 function milesweb_plugin_deactivate() {
     // Add custom functionality on plugin deactivation

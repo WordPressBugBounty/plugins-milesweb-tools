@@ -9,6 +9,7 @@ function milesweb_settings_register() {
     register_setting('milesweb_settings_group', 'milesweb_force_https_redirect', 'sanitize_boolean');
     register_setting('milesweb_settings_group', 'milesweb_file_editing_disabled', 'sanitize_boolean');
     register_setting('milesweb_settings_group', 'milesweb_disable_xmlrpc', 'sanitize_boolean');
+    register_setting('milesweb_settings_group', 'mw_force_footer_enabled', 'sanitize_boolean');
     // Ensure option exists
     if (get_option('milesweb_disable_xmlrpc') === false) {
         add_option('milesweb_disable_xmlrpc', 0);

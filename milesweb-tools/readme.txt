@@ -1,18 +1,19 @@
 === MilesWeb Tools ===
 Contributors: milesweb
-Tags: security, maintenance, user logging, plugin info, storage usage
+Tags: security, maintenance, user logging, plugin info, storage usage, security Checks, Malware-Secured Report
 Requires at least: 5.6
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: trunk
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-
-Short Description: Manage security, maintenance, and user logging while monitoring storage usage in one plugin.
+== Short Description ==
+Manage security, maintenance, and user logging while monitoring storage usage in one plugin.
 
 == Description ==
-MilesWeb Tools is a powerful WordPress plugin designed to enhance security, manage maintenance mode, enforce HTTPS, disable file editing, log user activity, track storage usage, and provide detailed insights into active/inactive themes and plugins.
+
+**MilesWeb Tools** is a powerful WordPress plugin designed to enhance your site's functionality and security. It helps you manage security settings, maintenance mode, enforce HTTPS, disable file editing, log user activity, track storage usage, and provides detailed insights into active and inactive themes and plugins.
 
 Features:
 
@@ -52,6 +53,7 @@ Features:
 3. Active & inactive plugins list with performance metrics.
 4. Storage usage tracking.
 5. Theme information panel.
+6. Screenshot of the Malware-Secured Report page showing scan results.
 
 == Frequently Asked Questions ==
 = Does this plugin work with all WordPress themes? =
@@ -63,7 +65,15 @@ The plugin scans installed plugins and themes for vulnerabilities.
 = Can I disable specific features? =
 Yes, each feature has a toggle switch in the admin panel.
 
+### New Features in v1.0.2:
+- **Malware-Secured Report**: Get detailed reports on potential security risks and malware threats detected on your site. This new feature scans your website for malware and provides a comprehensive report to help you take action.
+- **Resolved Maintenance Mode Issues**: Fixed the issue where some users were experiencing problems with the maintenance mode feature. The site now behaves correctly during updates, ensuring smoother operations
+
 == Changelog ==
+= 1.0.2 =
+* Added **Malware-Secured Report** to identify and resolve potential security issues.
+* Fixed **maintenance mode** issues that affected some users during updates.
+
 = 1.0.1 =
 * Fixed issues related to maintenance mode display and behavior.
 * Minor UI improvements for the admin panel.

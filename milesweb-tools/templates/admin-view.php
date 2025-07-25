@@ -62,6 +62,94 @@ if (!defined('ABSPATH')) {
                 </label>
             </div>
         </div>
+       <!-- Force Footer Option -->
+        <div class="mw-row mw-col-12 mw-col-xl-3 mw-col-sm-6">
+            <div class="mw-row mw-card mw-justify-content-space-between mw-align-items-center">
+                <div class="mw-row mw-col-xl-8 mw-col-10">
+                    <h2 class="av-setting-h3">Complete Web Protection</h2>
+                    <p>Integrated real-time scanning with protection against various threats.</p>
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=milesweb-security')); ?>">View Malware Security Reports</a>
+                </div>
+
+                <label class="milesweb-toggle">
+                    <input type="checkbox" id="mw_force_footer_enabled" <?php checked(get_option('mw_force_footer_enabled', true), true); ?> />
+                    <span class="milesweb-slider"></span>
+                </label>
+            </div>
+        </div>
+        <!-- Active Theme -->
+        <?php $theme_info = milesweb_get_active_theme_info(); ?>
+        <div class="mw-col-12 mw-col-xl-5 d-flex">
+            <div class="mw-card flex-1 mw-overflow-md">
+                <div class="mw-row">
+                    <div class="mw-col-md-6">
+                        <h2 class="mw-h3">Active Theme</h2>
+                        <p class=""><strong>Name:</strong> <?php echo esc_html($theme_info['name']); ?></p>
+                        <p><strong>Version:</strong> <?php echo esc_html($theme_info['version']); ?></p>
+                        <p><strong>Author:</strong> <?php echo esc_html($theme_info['author']); ?></p>
+                        <p><strong>Theme URI:</strong> <a class="av-link-overflow" href="<?php echo esc_url($theme_info['theme_uri']); ?>" target="_blank"><?php echo esc_html($theme_info['theme_uri']); ?></a></p>
+                    </div>
+                    <div class="mw-col-md-6 d-flex mw-justify-content-center">
+                        <p class="m-0 pl-10"><strong class="av-scr-h4">Screenshot:</strong><br>
+                            <?php if (!empty($theme_info['screenshot'])) : ?>
+                                <img class="img-fluid av-screenshot" src="<?php echo esc_url($theme_info['screenshot']); ?>" width="240" alt="Theme Screenshot">
+                            <?php else : ?>
+                                No screenshot available.
+                            <?php endif; ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Third Column: Last 5 User Logins -->
+        <div class="mw-col-12 mw-col-xl-4 d-flex">
+            <!-- User Activity Section -->
+            <div class="mw-card flex-1">
+                <h3 class="mw-h3">Last 5 User Logins</h3>
+                    <?php
+                global $wpdb; // Global wpdb object
+                // Define cache key and group
+                $cache_key = 'last_login_users_top_5';
+                $cache_group = 'user_login_data';
+                // Try to get cached results
+                $results = wp_cache_get($cache_key, $cache_group);
+                if (false === $results) {
+                    // Secure database query with prepare() to prevent SQL injection
+                    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Caching is implemented with wp_cache_get and wp_cache_set
+                    $results = $wpdb->get_results(
+                        $wpdb->prepare(
+                            "SELECT um.user_id, CAST(um.meta_value AS UNSIGNED) AS last_login, u.user_login
+                            FROM {$wpdb->usermeta} um
+                            INNER JOIN {$wpdb->users} u ON um.user_id = u.ID
+                            WHERE um.meta_key = %s
+                            ORDER BY last_login DESC
+                            LIMIT %d",
+                            'last_login',
+                            5
+                        )
+                    );
+                    // Store result in cache (cache for 12 hours)
+                    wp_cache_set($cache_key, $results, $cache_group, 12 * HOUR_IN_SECONDS);
+                }
+                    if (!empty($results)) {
+                        echo '<div class="mw-flex-flow-column">';
+                        echo '<div class="mw-flex"><div class="mw-table-cell"><strong>' . esc_html__('User', 'milesweb-tools') . '</strong></div>';
+                        echo '<div class="mw-table-cell"><strong>' . esc_html__('Last Login', 'milesweb-tools') . '</strong></div></div>';
+                        foreach ($results as $row) {
+                            $user_login = esc_html($row->user_login); // 🔹 Escape output
+                            $last_login = esc_html(gmdate('Y-m-d H:i:s', $row->last_login)); // 🔹 Escape output
+                            echo '<div class="mw-flex">';
+                            echo '<div class="mw-table-cell">' .esc_html($user_login) . '</div>';
+                            echo '<div class="mw-table-cell">' . esc_html($last_login) . '</div>';
+                            echo '</div>';
+                        }
+                        echo '</div>';
+                    } else {
+                        echo '<p>' . esc_html__('No login data available.', 'milesweb-tools') . '</p>';
+                    }
+                    ?>
+            </div>
+        </div>
     </div>
     <div class="mw-row mw-justify-content-space-between">
         <!-- First Column WordPress Version -->
@@ -118,87 +206,8 @@ if (!defined('ABSPATH')) {
                     </div>
                 </div>
             </div>
-        <?php $theme_info = milesweb_get_active_theme_info(); ?>
-        <div class="mw-col-12 mw-col-xl-6 d-flex">
-            <div class="mw-card flex-1 mw-overflow-md">
-                <div class="mw-row">
-                    <div class="mw-col-md-6">
-                        <h2 class="mw-h3">Active Theme</h2>
-                        <p class=""><strong>Name:</strong> <?php echo esc_html($theme_info['name']); ?></p>
-                        <p><strong>Version:</strong> <?php echo esc_html($theme_info['version']); ?></p>
-                        <p><strong>Author:</strong> <?php echo esc_html($theme_info['author']); ?></p>
-                        <p><strong>Theme URI:</strong> <a class="av-link-overflow" href="<?php echo esc_url($theme_info['theme_uri']); ?>" target="_blank"><?php echo esc_html($theme_info['theme_uri']); ?></a></p>
-                    </div>
-                    <div class="mw-col-md-6 d-flex mw-justify-content-center">
-                        <p class="m-0 pl-10"><strong class="av-scr-h4">Screenshot:</strong><br>
-                            <?php if (!empty($theme_info['screenshot'])) : ?>
-                                <img class="img-fluid av-screenshot" src="<?php echo esc_url($theme_info['screenshot']); ?>" width="240" alt="Theme Screenshot">
-                            <?php else : ?>
-                                No screenshot available.
-                            <?php endif; ?>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Third Column: Last 5 User Logins -->
-        <div class="mw-col-12 mw-col-xl-6 d-flex">
-        <!-- User Activity Section -->
-        <div class="mw-card flex-1">
-            <h3 class="mw-h3">Last 5 User Logins</h3>
-                <?php
-               global $wpdb; // Global wpdb object
-
-               // Define cache key and group
-               $cache_key = 'last_login_users_top_5';
-               $cache_group = 'user_login_data';
-
-               // Try to get cached results
-               $results = wp_cache_get($cache_key, $cache_group);
-
-               if (false === $results) {
-                   // Secure database query with prepare() to prevent SQL injection
-                   // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Caching is implemented with wp_cache_get and wp_cache_set
-                   $results = $wpdb->get_results(
-                       $wpdb->prepare(
-                           "SELECT um.user_id, CAST(um.meta_value AS UNSIGNED) AS last_login, u.user_login
-                           FROM {$wpdb->usermeta} um
-                           INNER JOIN {$wpdb->users} u ON um.user_id = u.ID
-                           WHERE um.meta_key = %s
-                           ORDER BY last_login DESC
-                           LIMIT %d",
-                           'last_login',
-                           5
-                       )
-                   );
-
-                   // Store result in cache (cache for 12 hours)
-                   wp_cache_set($cache_key, $results, $cache_group, 12 * HOUR_IN_SECONDS);
-               }
-
-                if (!empty($results)) {
-                    echo '<div class="mw-flex-flow-column">';
-                    echo '<div class="mw-flex"><div class="mw-table-cell"><strong>' . esc_html__('User', 'milesweb-tools') . '</strong></div>';
-                    echo '<div class="mw-table-cell"><strong>' . esc_html__('Last Login', 'milesweb-tools') . '</strong></div></div>';
-
-                    foreach ($results as $row) {
-                        $user_login = esc_html($row->user_login); // 🔹 Escape output
-                        $last_login = esc_html(gmdate('Y-m-d H:i:s', $row->last_login)); // 🔹 Escape output
-
-                        echo '<div class="mw-flex">';
-                        echo '<div class="mw-table-cell">' .esc_html($user_login) . '</div>';
-                        echo '<div class="mw-table-cell">' . esc_html($last_login) . '</div>';
-                        echo '</div>';
-                    }
-                    echo '</div>';
-                } else {
-                    echo '<p>' . esc_html__('No login data available.', 'milesweb-tools') . '</p>';
-                }
 
 
-                ?>
-        </div>
-    </div>
         <?php $plugins = milesweb_get_plugins_info(); ?>
         <div class="mw-row mw-col-12 mw-col-xl-6 d-flex">
             <div class="mw-row mw-card mw-col-12 flex-1 mw-overflow-md">
